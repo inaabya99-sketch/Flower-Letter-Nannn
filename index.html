@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fdfbf7">
+  <title>Bloom & Letters — A Flower for Your Heart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="petals" id="petals" aria-hidden="true"></div>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="#home" data-view="home" aria-label="Bloom & Letters, beranda"><span class="brand-mark">✿</span><span>Bloom <i>&</i> Letters</span></a>
+      <nav class="nav-actions" aria-label="Navigasi utama">
+        <button class="btn btn-quiet back-button" id="backButton" type="button" hidden>← Kembali</button>
+        <button class="btn btn-quiet" type="button" data-view="flowers">Pilih bunga</button>
+        <button class="btn btn-quiet" type="button" data-view="search">Cari suratku</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="view active" id="home" aria-labelledby="heroTitle">
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow"><span class="eyebrow-line"></span> Sebuah taman kecil untuk perasaanmu</span>
+            <h1 id="heroTitle">A Flower for<br><em>Your Heart</em></h1>
+            <p class="hero-subtitle">Sometimes, the words we hide deserve to bloom.</p>
+            <p class="hero-note">Pilih bunga, tulis pesan dari hati, lalu kirimkan secara anonim—atau dengan namamu.</p>
+            <div class="hero-actions">
+              <button class="btn btn-primary btn-large" type="button" data-view="flowers">Kirim Surat <span aria-hidden="true">↗</span></button>
+              <button class="btn btn-outline btn-large" type="button" data-view="search">Cari Suratku <span aria-hidden="true">⌕</span></button>
+            </div>
+            <p class="local-note"><span aria-hidden="true">✧</span> Surat tersimpan di browser ini dalam versi demo.</p>
+          </div>
+          <div class="hero-art" aria-label="Rangkaian bunga pilihan">
+            <div class="art-halo"></div>
+            <img class="hero-photo hero-photo-main" src="https://images.unsplash.com/photo-1494972308805-463bc619d34e?auto=format&fit=crop&w=900&q=85" alt="Bunga mawar merah muda" data-fallback="rose">
+            <img class="hero-photo hero-photo-small" src="https://images.unsplash.com/photo-1520763185298-1b434c919102?auto=format&fit=crop&w=400&q=85" alt="Tulip berwarna lembut" data-fallback="tulip">
+            <span class="art-label">made with a little tenderness</span>
+            <span class="leaf leaf-one" aria-hidden="true">❧</span><span class="leaf leaf-two" aria-hidden="true">❧</span>
+          </div>
+        </div>
+        <div class="home-quote"><span>“</span><p>Setiap bunga menyimpan bahasa kecilnya sendiri.</p><span>”</span></div>
+      </section>
+
+      <section class="view" id="flowers" aria-labelledby="flowersTitle">
+        <div class="section-heading">
+          <span class="eyebrow">01 · Pilih dengan hati</span>
+          <h2 id="flowersTitle">Bunga untuk setiap rasa</h2>
+          <p>Makna ini adalah inspirasi simbolis, bukan arti yang mutlak. Pilih yang paling mewakili perasaanmu.</p>
+        </div>
+        <div class="flower-grid" id="flowerGrid"></div>
+      </section>
+
+      <section class="view" id="write" aria-labelledby="writeTitle">
+        <div class="section-heading compact-heading">
+          <span class="eyebrow">02 · Rangkai kata-katamu</span>
+          <h2 id="writeTitle">Tulis surat dengan hati</h2>
+          <p>Nama penerima membantu mereka menemukan suratmu di browser yang sama.</p>
+        </div>
+        <div class="letter-layout">
+          <form class="form-card" id="letterForm" novalidate>
+            <div class="chosen-flower" id="chosenFlower"></div>
+            <div class="field-group">
+              <label for="recipient">Nama panggilan penerima</label>
+              <input class="form-control" id="recipient" name="recipient" type="text" maxlength="60" placeholder="Contoh: Senja" autocomplete="off" required>
+              <small class="field-error" id="recipientError" aria-live="polite"></small>
+            </div>
+            <div class="field-group">
+              <label for="message">Isi surat</label>
+              <textarea class="form-control" id="message" name="message" maxlength="2000" rows="7" placeholder="Ada sesuatu yang ingin kusampaikan, meskipun mungkin aku tak akan mengatakannya secara langsung..." required></textarea>
+              <div class="field-foot"><small class="field-error" id="messageError" aria-live="polite"></small><small id="characterCount">0 / 2000</small></div>
+            </div>
+            <div class="field-group sender-field">
+              <label class="check-label"><input id="showSender" type="checkbox"><span class="custom-check" aria-hidden="true"></span><span>Tampilkan nama pengirim (opsional)</span></label>
+              <input class="form-control sender-input" id="sender" type="text" maxlength="60" placeholder="Nama atau panggilanmu" autocomplete="off" disabled>
+              <small class="privacy-note">Secara default, surat dikirim anonim. Kami tidak meminta informasi pribadi sensitif.</small>
+            </div>
+            <p class="form-error" id="formError" role="alert"></p>
+            <button class="btn btn-primary send-button" type="submit">Kirim Surat <span aria-hidden="true">♡</span></button>
+          </form>
+          <aside class="preview-wrap" aria-label="Pratinjau surat">
+            <span class="preview-caption">PRATINJAU SURAT</span>
+            <article class="letter-preview">
+              <div class="preview-stamp">B<span>✿</span></div>
+              <img id="previewImage" class="preview-image" alt="Bunga terpilih">
+              <p class="preview-to">Untuk, <strong id="previewRecipient">seseorang yang istimewa</strong></p>
+              <p class="preview-message" id="previewMessage">Kata-katamu akan tumbuh di sini...</p>
+              <div class="preview-meaning" id="previewMeaning"></div>
+              <div class="preview-signoff">dikirim dengan kelembutan <span>♡</span></div>
+            </article>
+            <p class="preview-disclaimer">Pratinjau ini hanya terlihat olehmu sebelum surat disimpan.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" id="success" aria-labelledby="successTitle">
+        <div class="success-card">
+          <div class="success-flower" aria-hidden="true"><span>✿</span><i>✧</i></div>
+          <span class="eyebrow">Pesanmu telah tersimpan</span>
+          <h2 id="successTitle">Your letter has bloomed!</h2>
+          <p class="success-intro">Sebuah pesan kecil kini menunggu untuk ditemukan di taman browser ini.</p>
+          <div class="code-label">KODE SURAT</div>
+          <div class="code-box"><code id="letterCode">BLOOM-000000</code><button class="copy-button" id="copyCode" type="button" aria-label="Salin kode surat">Salin</button></div>
+          <p class="success-recipient" id="successRecipient"></p>
+          <p class="storage-notice"><strong>Catatan demo:</strong> surat tersimpan hanya di localStorage browser/perangkat ini. Surat belum terkirim ke perangkat orang lain. Penerima dapat mencari namanya di halaman “Cari Suratku” pada browser ini.</p>
+          <div class="success-actions"><button class="btn btn-primary" type="button" data-view="search">Cari surat</button><button class="btn btn-outline" type="button" data-view="home">Kembali ke taman</button></div>
+        </div>
+      </section>
+
+      <section class="view" id="search" aria-labelledby="searchTitle">
+        <div class="section-heading">
+          <span class="eyebrow">03 · Buka pesan yang menunggumu</span>
+          <h2 id="searchTitle">Cari Suratku</h2>
+          <p>Masukkan nama panggilan yang mungkin ditulis pengirim.</p>
+        </div>
+        <form class="search-form" id="searchForm">
+          <label class="sr-only" for="searchName">Nama panggilan penerima</label>
+          <input class="form-control" id="searchName" type="search" maxlength="60" placeholder="Tulis nama panggilanmu..." required>
+          <button class="btn btn-primary" type="submit">Cari surat <span aria-hidden="true">⌕</span></button>
+        </form>
+        <div class="search-hint" id="searchHint">Surat dapat ditemukan di browser yang sama tempat surat dibuat.</div>
+        <div class="search-results" id="searchResults" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Bloom & Letters <span>✿</span> Sebuah taman kecil untuk kata-kata yang tulus.</p>
+      <p class="footer-small">Versi demo menyimpan surat secara lokal di browser ini, bukan mengirimkannya melalui internet.</p>
+    </footer>
+  </div>
+
+  <div class="modal-backdrop" id="flowerModal" aria-hidden="true">
+    <section class="flower-modal" role="dialog" aria-modal="true" aria-labelledby="modalFlowerName">
+      <button class="modal-close" id="closeModal" type="button" aria-label="Tutup">×</button>
+      <img id="modalFlowerImage" alt="">
+      <span class="eyebrow">Sebuah bunga untukmu</span>
+      <h2 id="modalFlowerName"></h2>
+      <p id="modalFlowerMeaning"></p>
+      <button class="btn btn-primary" id="chooseFlower" type="button">Pilih Bunga Ini <span aria-hidden="true">♡</span></button>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
